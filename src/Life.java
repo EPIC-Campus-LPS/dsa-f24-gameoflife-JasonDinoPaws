@@ -12,10 +12,14 @@ public class Life extends JFrame implements ActionListener {
     private LifeView view;
     private LifeModel model;
     private JButton runButton, pauseButton, resumeButton, stepButton;
+    private String[] files = {"life100.txt","blinker_lif.dat","glgun13_lif.dat","penta_lif.dat","tumbler_lif.dat"};
+
     //private Timer timer;
 
     public Life() {
-        super("Conway's Game of Life");
+        super("Conway's Game of Life | File: ");
+        String file = files[(int) (Math.random()*files.length)];
+        super.setTitle("Conway's Game of Life | File: "+file);
 
         // build the buttons
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -43,10 +47,10 @@ public class Life extends JFrame implements ActionListener {
         // put buttons, view together
         Container c = getContentPane();
         c.add(controlPanel, BorderLayout.NORTH);
-        c.add(view, BorderLayout.CENTER);
+        c.add(view, BorderLayout.CENTER);;
 
         // build the model
-        model = new LifeModel(view);
+        model = new LifeModel(view,file);
     }
 
     /**
