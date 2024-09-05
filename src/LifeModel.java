@@ -98,7 +98,7 @@ public class LifeModel implements ActionListener
      */
     public void run()
     {
-        timer = new Timer(50, this); //create timer and set delay
+        timer = new Timer(75, this); //create timer and set delay
         timer.setCoalesce(true); //keep timer events even
         timer.start(); //start the timer
     }
@@ -115,6 +115,38 @@ public class LifeModel implements ActionListener
     }
 
     /**
+     * Helper method for oneGeneration
+     * Given a cell in the grid, count its number
+     * of live neighbors.  (Can you use nested loops??)
+     * @param row - row of cell to find neighbors
+     * @param col - column of cell to find neighbors
+     * @return - number of live neighbors of the cell
+     *
+     * This method calls inBounds()
+     */
+    private int NumLiveNeighbors(int r, int c)
+    {
+        int alive = 0;
+        int[][] nabs = {
+                {r-1,c},{r-1,c-1},{r-1,c+1},
+                {r+1,c},{r+1,c-1},{r+1,c+1},
+                {r,c-1},{r,c+1}
+        };
+
+        for (int[] pos: nabs)
+        {
+            int x = pos[1];
+            int y = pos[0];
+
+            if (y > -1 && y < myGrid.length && x > -1 && x < myGrid[0].length)
+                if (myGrid[x][y].alive_now)
+                    alive ++;
+        }
+
+        return alive;
+    }
+
+    /**
      * Updates all cells in the grid to create the next generation
      * of life and death.  The next state of the grid
      * must be set by looking at the now state.
@@ -127,9 +159,24 @@ public class LifeModel implements ActionListener
      * 
      * This method calls NumLiveNeighbors(), updateNextGen()
      */
+
     public void oneGeneration()
     {
-    	
+        for (int r = 0; r < myGrid.length; r++)
+            for (int c = 0; c < myGrid[0].length; c++)
+            {
+                int alive = NumLiveNeighbors(r,c);
+                LifeCell cell = myGrid[r][c];
+
+                if (!cell.alive_now && alive == 3)
+                    cell.setAliveNext(true);
+                else if (alive < 4 && alive > 1)
+                    cell.setAliveNext(true);
+                else
+                    cell.setAliveNext(false);
+
+            }
+        updateNextGen();
     } 
     
     /**
@@ -139,35 +186,13 @@ public class LifeModel implements ActionListener
      * use for each loops
      */
     private void updateNextGen() {
+        for (int r = 0; r < myGrid.length; r++)
+            for (int c = 0; c < myGrid[0].length; c++)
+            {
+                LifeCell cell = myGrid[r][c];
 
-    }
-     
-    /**
-     * Helper method for oneGeneration
-     * Given a cell in the grid, count its number
-     * of live neighbors.  (Can you use nested loops??)
-     * @param row - row of cell to find neighbors
-     * @param col - column of cell to find neighbors
-     * @return - number of live neighbors of the cell
-     * 
-     * This method calls inBounds()
-     */
-    private int numLiveNeighbors (int row, int col)
-    {
-       return 0;
-    }
-    
-    /**
-     * Helper method for numLiveNeighbors
-     * Given a cell row and col checks to see if 
-     * the cell is in bounds.
-     * @param row - row of cell
-     * @param col - column of cell
-     * @return - true if this cell is in bounds
-     */
-    private boolean inBounds(int row, int col)
-    {
-        return false;
+                cell.setAliveNow(cell.alive_next);
+            }
     }
 }
 
