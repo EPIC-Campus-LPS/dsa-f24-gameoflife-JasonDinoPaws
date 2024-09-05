@@ -64,11 +64,13 @@ public class Life extends JFrame implements ActionListener {
             model.pause();
             runButton.setEnabled(false);
             pauseButton.setEnabled(false);
+            resumeButton.setEnabled(true);
             stepButton.setEnabled(true);
         } else if (b == resumeButton) {
             model.resume();
             runButton.setEnabled(false);
             pauseButton.setEnabled(true);
+            resumeButton.setEnabled(false);
             stepButton.setEnabled(false);
         } else if (b == stepButton) {
             model.step();
