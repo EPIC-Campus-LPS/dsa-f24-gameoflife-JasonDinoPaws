@@ -31,7 +31,7 @@ public class LifeModel implements ActionListener
     private Timer timer; //makes the animation possible
 
     // initial population from file or random if no file available
-    public LifeModel(LifeView view)
+    public LifeModel(LifeView view, String file)
     {
     	
     	// initialize 
@@ -40,11 +40,11 @@ public class LifeModel implements ActionListener
             for (int c = 0; c < SIZE; c++ )
                 myGrid[r][c] = new LifeCell();
 
-      
         try
         {
-        	File reader = new File("life100.txt");
+        	File reader = new File(file);
         	Scanner infile = new Scanner(reader);
+
         	int numInitialCells = infile.nextInt();
             for (int count=0; count<numInitialCells; count++)
             {
