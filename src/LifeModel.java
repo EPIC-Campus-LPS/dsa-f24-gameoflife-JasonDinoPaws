@@ -7,21 +7,14 @@ import javax.swing.*;
 
 import java.util.Scanner;
 
-
 /**
- * @author kimberly.jans
- * This class simulates Conway's Game of Life
- * each time the timer fires, the next generation of
- * the cells is calculated.
- * If you click run, the simulation will run continuously
- * pause will stop the simulation momentarily
- * step will generate only the next generation of cells
- * resume starts the simulation running again after pause
+ * the Model for all cells
  */
+
 public class LifeModel implements ActionListener
 {
 
-    /*
+    /**
      *  This is the Model component.
      */
 
@@ -31,6 +24,12 @@ public class LifeModel implements ActionListener
     private Timer timer; //makes the animation possible
 
     // initial population from file or random if no file available
+
+    /**
+     * loads in the given file name
+     * creates the grid and fills it with cells
+     * sets some cells accoring to the file name to being alive
+     */
     public LifeModel(LifeView view, String file)
     {
     	
@@ -115,14 +114,7 @@ public class LifeModel implements ActionListener
     }
 
     /**
-     * Helper method for oneGeneration
-     * Given a cell in the grid, count its number
-     * of live neighbors.  (Can you use nested loops??)
-     * @param row - row of cell to find neighbors
-     * @param col - column of cell to find neighbors
-     * @return - number of live neighbors of the cell
-     *
-     * This method calls inBounds()
+     * with a given row and col; it will check all 8 nearest neighbors and returns the amount that are alive
      */
     private int NumLiveNeighbors(int r, int c)
     {
@@ -147,19 +139,12 @@ public class LifeModel implements ActionListener
     }
 
     /**
-     * Updates all cells in the grid to create the next generation
-     * of life and death.  The next state of the grid
-     * must be set by looking at the now state.
-     * The rules of life:
-     * 1. An empty cell with 3 live neighbors comes to life in the next generation.
-     * 2. A cell with 1 or 0 neighbors will die of loneliness.
-     * 3. A cell with 4 or more neighbors will die from overcrowding.
-     * 4. A cell with 2 or 3 neighbors will live into the next generation.
-     * 5. All births and deaths occur simultaneously!
-     * 
-     * This method calls NumLiveNeighbors(), updateNextGen()
+     * will check all rows and cols for what neighbors are alive to see if it would be alive Next Generation
+     *
+     * Not alive Now and 3 neighbors are it will be alive next Gen
+     * Less than 4 and greater than 1 neighbors alive it will be alive next Gen
+     * else it will die next Gen
      */
-
     public void oneGeneration()
     {
         for (int r = 0; r < myGrid.length; r++)
@@ -180,10 +165,7 @@ public class LifeModel implements ActionListener
     } 
     
     /**
-     * Helper method for oneGeneration()
-     * Update all cells in the grid
-     * "simultaneously" to their new destiny.
-     * use for each loops
+     * Runs after oneGeneration() that just sets all cells Alive now Var based on the Alive next
      */
     private void updateNextGen() {
         for (int r = 0; r < myGrid.length; r++)
