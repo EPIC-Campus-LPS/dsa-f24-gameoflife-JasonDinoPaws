@@ -2,19 +2,32 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
-/*
-    this is the Controller component
-*/
+/**
+ * The start of it all
+ */
 
 public class Life extends JFrame implements ActionListener {
+    /**
+     * Declares variables
+     * @view is the display's the grid of cells
+     * @model is just a class that holds all data related to each cell
+     * @JButtons are buttons
+     * @files is just a array of all files that could be loaded
+     */
     private static final long serialVersionUID = 1L;
     private LifeView view;
     private LifeModel model;
     private JButton runButton, pauseButton, resumeButton, stepButton;
     private String[] files = {"life100.txt","blinker_lif.dat","glgun13_lif.dat","penta_lif.dat","tumbler_lif.dat"};
-
     //private Timer timer;
+
+    /**
+     * It creates the JFrame
+     * Picks a random file from the files area
+     * creates all of the buttons
+     * creates the View of all cells
+     * and Creates the Model given the view
+     */
 
     public Life() {
         super("Conway's Game of Life | File: ");
@@ -42,7 +55,7 @@ public class Life extends JFrame implements ActionListener {
 
         // build the view
         view = new LifeView();
-        view.setBackground(Color.white);
+        view.setBackground(Color.black);
 
         // put buttons, view together
         Container c = getContentPane();
